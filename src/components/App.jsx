@@ -36,6 +36,7 @@ const App = () => {
             largeImageURL,
           }))
         );
+        Notify.success(`Found ${imagesArray.total} pictures...`);
         setPreLoader(false);
       } catch (error) {
         Notify.failure('Not result');
