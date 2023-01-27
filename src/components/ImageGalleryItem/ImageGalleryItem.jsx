@@ -3,7 +3,8 @@ import {
   ImageGalleryItemImg,
   ImageGalleryListItem,
 } from './ImageGalleryItem.styled';
-export const ImageGalleryItem = ({ url, onToggleModal, onClickPictures }) => (
+
+const ImageGalleryItem = ({ url, onToggleModal, onClickPictures }) => (
   <ImageGalleryListItem onClick={onToggleModal}>
     <ImageGalleryItemImg onClick={onClickPictures} src={url} alt="" />
   </ImageGalleryListItem>
@@ -14,3 +15,5 @@ ImageGalleryItem.propTypes = {
   onClickPictures: PropTypes.func.isRequired,
   onToggleModal: PropTypes.func.isRequired,
 };
+
+export default ImageGalleryItem;

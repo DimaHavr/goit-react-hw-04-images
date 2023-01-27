@@ -4,7 +4,7 @@ import { createPortal } from 'react-dom';
 import { Overlay, ModalBox } from './Modal.styled';
 const modalRoot = document.querySelector('#modal-root');
 
-export function Modal({ onToggleModal, img }) {
+export default function Modal({ onToggleModal, img }) {
   const onBackdropCloseModal = event => {
     if (event.target === event.currentTarget) {
       onToggleModal();

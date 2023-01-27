@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { useState } from 'react';
 
 import {
@@ -8,24 +9,24 @@ import {
   SearchFormInput,
 } from './SearchBar.styled';
 
-export function SearchBar({ onSubmit }) {
-  const [imagesName, setImagesName] = useState('');
+export default function SearchBar({ onSubmit }) {
+  const [query, setQuery] = useState('');
 
-  const handleImagesNameChange = event => {
-    setImagesName(event.currentTarget.value.toLowerCase());
+  const handleQueryChange = event => {
+    setQuery(event.currentTarget.value.toLowerCase());
   };
 
   const handleSubmit = event => {
     event.preventDefault();
-    onSubmit(imagesName);
-    setImagesName('');
+    onSubmit(query);
+    setQuery('');
     event.target.reset(event);
   };
 
   return (
     <Header>
       <SearchForm onSubmit={handleSubmit}>
-        <SearchFormButton disabled={imagesName.length === 0} type="submit">
+        <SearchFormButton disabled={query.length === 0} type="submit">
           <SearchFormIcon
             aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"
@@ -38,12 +39,16 @@ export function SearchBar({ onSubmit }) {
 
         <SearchFormInput
           type="text"
-          name="imagesName"
-          value={imagesName}
-          onChange={handleImagesNameChange}
+          name="query"
+          value={query}
+          onChange={handleQueryChange}
           placeholder="Search images and photos"
         />
       </SearchForm>
     </Header>
   );
 }
+
+SearchBar.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+};

@@ -1,8 +1,8 @@
-import { Box } from 'components/Box';
+import Box from 'components/Box';
 import PropTypes from 'prop-types';
-import { ButtonStyled } from './Button.styled';
+import { ButtonStyled } from './LoadMoreButton.styled';
 
-export const Button = ({ onLoadMore }) => {
+const LoadMoreButton = ({ onLoadMore }) => {
   return (
     <Box textAlign="center" paddingBottom="30px">
       <ButtonStyled onClick={onLoadMore} type="button">
@@ -12,6 +12,8 @@ export const Button = ({ onLoadMore }) => {
   );
 };
 
-Button.propTypes = {
+LoadMoreButton.propTypes = {
   onLoadMore: PropTypes.func.isRequired,
 };
+
+export default LoadMoreButton;
