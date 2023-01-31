@@ -18,10 +18,10 @@ const App = () => {
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    const onFetchPictures = async () => {
+    const fetchAndUpdatePictures = async () => {
       setPreLoader(true);
       try {
-        const imagesArray = await fetchPictures(query);
+        const imagesArray = await fetchPictures(query, page);
         setTotalHits(imagesArray.totalHits);
         if (imagesArray.totalHits === 0) {
           Notify.failure(
@@ -29,34 +29,6 @@ const App = () => {
           );
           return;
         }
-        setImagesArray(
-          imagesArray.hits.map(({ id, webformatURL, largeImageURL }) => ({
-            id,
-            webformatURL,
-            largeImageURL,
-          }))
-        );
-        Notify.success(`Found ${imagesArray.total} pictures...`);
-        setPreLoader(false);
-      } catch (error) {
-        Notify.failure('Not result');
-      } finally {
-        setPreLoader(false);
-      }
-    };
-
-    if (!query) {
-      return;
-    }
-    onFetchPictures();
-  }, [query]);
-
-  useEffect(() => {
-    const onLoadPictures = async () => {
-      setPreLoader(true);
-
-      try {
-        const imagesArray = await fetchPictures(query, page);
         setImagesArray(prevImagesArray => [
           ...prevImagesArray,
           ...imagesArray.hits.map(({ id, webformatURL, largeImageURL }) => ({
@@ -73,10 +45,10 @@ const App = () => {
       }
     };
 
-    if (page === 1) {
+    if (!query) {
       return;
     }
-    onLoadPictures();
+    fetchAndUpdatePictures();
   }, [query, page]);
 
   const onLoadMore = () => {
@@ -119,12 +91,14 @@ const App = () => {
             />
           )}
           {preLoader && <Loader />}
-          {showEndText && (
+          {!showLoadMoreBtn && showEndText && (
             <Box as="p" textAlign="center" fontWeight="700">
               The end
             </Box>
           )}
-          {showLoadMoreBtn && <LoadMoreButton onLoadMore={onLoadMore} />}
+          {!preLoader && showLoadMoreBtn && (
+            <LoadMoreButton onLoadMore={onLoadMore} />
+          )}
         </Box>
       </Box>
       {showModal && <Modal onToggleModal={onToggleModal} img={largeImageURL} />}
